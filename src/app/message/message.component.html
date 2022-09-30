@@ -1,0 +1,75 @@
+<div class="w-75 m-auto py-5">
+
+    <div *ngIf="error" class="alert alert-danger">
+        <p>{{error}}</p>
+    </div>
+    <div *ngIf="success" class="alert alert-success">
+        <p>{{success}}</p>
+    </div>
+    <form [formGroup]="createMessageForm" (ngSubmit)="submitIsoMessage(createMessageForm)">
+        <!--  -->
+        <!-- <h1>{{transactionType}}</h1> -->
+        <div class="form-group">
+            <select [(ngModel)]="transactionType" class="form-select form-select-lg mb-3" formControlName="transactionType" aria-label=".form-select-lg example">
+                <option selected>Select Transaction Type..</option>
+                <optgroup  *ngFor="let transaction of transactions" label="{{transaction.type}}" >
+                    <option class="p-2" *ngFor="let operation of transaction.operations" [ngValue]="operation.Id" value="{{operation.Id}}">{{operation.type}}</option>
+                </optgroup>
+            </select>
+            <div *ngIf="createMessageForm.get('transactionType')?.errors != null&&createMessageForm.get('transactionType')?.touched" class="alert alert-danger my-2 ">
+                <p *ngIf="createMessageForm.get('transactionType')?.errors?.['required']">transactionType is required</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="pan">Pan</label>
+            <input formControlName="pan" type="number " class="form-control " id="pan" />
+            <div *ngIf="createMessageForm.get('pan')?.errors != null&&createMessageForm.get('pan')?.touched" class="alert alert-danger my-2 ">
+                <p *ngIf="createMessageForm.get('pan')?.errors?.['required']">pan is required</p>
+                <p *ngIf="createMessageForm.get('pan')?.errors?.['maxlength']">pan maximum length 16</p>
+            </div>
+        </div>
+        <div class="form-group ">
+            <label for="pro">Processing Code</label>
+            <input formControlName="processingCode" type="number " class="form-control " id="pro" />
+            <div *ngIf="createMessageForm.get('processingCode')?.errors != null&&createMessageForm.get('processingCode')?.touched" class="alert alert-danger my-2 ">
+                <p *ngIf="createMessageForm.get('processingCode')?.errors?.['required']">processingCode is required</p>
+                <p *ngIf="createMessageForm.get('processingCode')?.errors?.['maxlength']">processingCode maximum length 6</p>
+            </div>
+        </div>
+        <div class="form-group ">
+            <label for="transactionAmount">Transaction Amount</label>
+            <input formControlName="transactionAmount" type="number " class="form-control " id="transactionAmount" />
+            <div *ngIf="createMessageForm.get('transactionAmount')?.errors != null&&createMessageForm.get('transactionAmount')?.touched" class="alert alert-danger my-2 ">
+                <p *ngIf="createMessageForm.get('transactionAmount')?.errors?.['required']">transactionAmount is required</p>
+                <p *ngIf="createMessageForm.get('transactionAmount')?.errors?.['maxlength']">transactionAmount maximum length 12</p>
+            </div>
+        </div>
+        <div class="form-group ">
+            <label for="settlementAmount">Settlement Amount </label>
+            <input formControlName="settlementAmount" type="number " class="form-control " id="settlementAmount" />
+            <div *ngIf="createMessageForm.get('settlementAmount')?.errors != null&&createMessageForm.get('settlementAmount')?.touched" class="alert alert-danger my-2 ">
+                <p *ngIf="createMessageForm.get('settlementAmount')?.errors?.['required']">settlementAmount is required</p>
+                <p *ngIf="createMessageForm.get('settlementAmount')?.errors?.['maxlength']">settlementAmount maximum length 12</p>
+            </div>
+        </div>
+        <div class="form-group" *ngIf="transactionType=='3'||transactionType=='2'||transactionType=='4'||transactionType=='5'||transactionType=='6'">
+            <label for="AccountId1">Account ID 1 (102)</label>
+            <input formControlName="AccountId1" type="number " class="form-control " id="AccountId1" />
+            <div *ngIf="createMessageForm.get('AccountId1')?.errors != null&&createMessageForm.get('AccountId1')?.touched" class="alert alert-danger my-2 ">
+                <p *ngIf="createMessageForm.get('AccountId1')?.errors?.['required']">AccountId1 is required</p>
+                <p *ngIf="createMessageForm.get('AccountId1')?.errors?.['maxlength']">AccountId1 maximum length 28</p>
+            </div>
+        </div>
+
+        <div class="form-group" *ngIf="transactionType=='1'||transactionType=='3'">
+            <label for="AccountId2">Account ID 2 (103)</label>
+            <input formControlName="AccountId2" type="number " class="form-control " id="AccountId2" />
+            <div *ngIf="createMessageForm.get('AccountId2')?.errors != null&&createMessageForm.get('AccountId2')?.touched" class="alert alert-danger my-2 ">
+                <p *ngIf="createMessageForm.get('AccountId2')?.errors?.['required']">AccountId2 is required</p>
+                <p *ngIf="createMessageForm.get('AccountId2')?.errors?.['maxlength']">AccountId2 maximum length 38</p>
+            </div>
+        </div>
+
+        <button [disabled]='createMessageForm.invalid' class="btn btn-info my-2 " type="submit ">Submit</button>
+    </form>
+</div>
